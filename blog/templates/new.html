@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{%url 'blog:home' %}">홈으로</a><br>
+
+<div class="container">
+    <h1 style="color:orangered">글쓰기</h1>
+    <form method="post" action="{% url 'blog:create' %}">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+       
+        <input class="btn btn-dark" type="submit" value="제출">
+    </form>
+</div>
+{% endblock %}

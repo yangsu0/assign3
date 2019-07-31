@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 style="margin-left:40%">나의 블로그 </h1><br>
+
+<a href="{% url 'accounts:login' %}">로그인</a>
+<a href="{% url 'accounts:signup' %}">회원가입</a>
+<a href="{% url 'blog:newblog' %}">글쓰기</a><br>
+<a href="{% url 'blog:portfolio' %}">포트폴리오</a>
+
+<h1 style="margin-left:10%">글 검색하기</h1>
+<br>
+<p>
+<section id="features">
+	<div class="container">
+	<div class=" col-12 col-12-medium">
+<section>
+	<form method="get" action=".">
+		<div position="center" class="row  col-12 col-6-small aln-center margin-bottom-4" style="margin-left: auto">
+			<input name="search" placeholder="글 제목 검색하기" type="text"  >
+		<span><button type="submit" class="form-button-submit button icon fa-search  input_store" sty]le="">Search</button>
+		</i></span>
+		</div>
+	</form>
+</section>
+</p>
+<br>
+<br>
+{%if query %}
+<p>Searched blogs for title : {{query}}</p>
+{% if searched_blogs%}
+{%for blogs in searched_blogs%}
+{{blogs.title}}
+{{blogs.pub_date}}
+{{blogs.body}}
+{% endfor %}
+{% else %}
+NO posts found.
+{% endif %}
+{% endif %}
+
+{% if posts %}
+<h1>전체글</h1>
+{% for blog in posts %}
+  <div class= "container">
+     <h5>{{blog.title}}</h5>
+     <h6>{{blog.pub_date}}</h6>
+     <p class="card-text">{{blog.body}}</p>
+    </div>
+{% endfor %}
+{% endif %}
+
+
+{%if posts.has_previous%}
+<a href="?page=1">First</a>
+<a href="?page={{ posts.previous_page_number }}">Previous</a>
+{%endif%}
+
+<span>{{ posts.number }}</span>
+<span>of</span>
+<span>{{ posts.paginator.num_pages }}</span>
+
+{%if posts.has_next%}
+<a href="?page={{ posts.next_page_number }}">Next</a>
+<a href="?page={{ posts.paginator.num_pages }}">Last</a>
+{%endif%}
+
+{% endblock %}
